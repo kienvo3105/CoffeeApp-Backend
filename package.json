@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kienvo3105/CoffeeApp-Backend#readme",
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.31",
     "app-root-path": "^3.1.0",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
