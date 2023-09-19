@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Manager.init({
+        id: {
+            allowNull: false,
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4 // Or DataTypes.UUIDV1
+        },
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         firstName: DataTypes.STRING,

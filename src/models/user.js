@@ -14,11 +14,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4 // Or DataTypes.UUIDV1
+    },
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    phoneNumber: DataTypes.INTEGER,
+    phoneNumber: DataTypes.STRING,
     coins: DataTypes.INTEGER,
     amountSpent: DataTypes.DOUBLE,
     membershipClass: DataTypes.STRING
@@ -26,5 +32,12 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+
+  // User.beforeCreate(async (user, options) => {
+  //   // Thực hiện các xử lý trước khi tạo
+  //   const hashPassword = await bcrypt.hash(user.password, 10);
+  //   user.password = hashPassword;
+  // });
+
   return User;
 };

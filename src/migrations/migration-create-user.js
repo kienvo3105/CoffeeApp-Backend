@@ -25,7 +25,7 @@ module.exports = {
       },
       phoneNumber: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       coins: {
         type: Sequelize.INTEGER
@@ -33,7 +33,7 @@ module.exports = {
       amountSpent: {
         type: Sequelize.DOUBLE
       },
-      memberClass: {
+      membershipClass: {
         type: Sequelize.STRING
       }
 

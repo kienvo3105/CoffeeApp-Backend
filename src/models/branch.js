@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Branch.init({
+        id: {
+            allowNull: false,
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4 // Or DataTypes.UUIDV1
+        },
         addressId: DataTypes.STRING,
         managerId: DataTypes.STRING,
         name: DataTypes.STRING,
