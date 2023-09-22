@@ -2,11 +2,14 @@ import express from 'express'
 import connectDB from './src/config/connectDB'
 import initRootRoute from './src/routes/root'
 import initAuthRoute from './src/routes/authRoutes';
-
+import initUserRoute from './src/routes/userRoutes';
+import cors from 'cors';
 import 'dotenv/config';
 
 
 const app = express();
+app.use(cors({ origin: true }))
+
 const port = process.env.PORT || 8000
 
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +17,7 @@ app.use(express.json());
 
 initRootRoute(app);
 initAuthRoute(app);
+initUserRoute(app);
 
 connectDB();
 

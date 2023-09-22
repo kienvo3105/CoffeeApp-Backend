@@ -3,13 +3,24 @@ const asyncHandler = require("express-async-handler");
 
 
 const register = asyncHandler(async (req, res) => {
-    const respond = await userService.createUser(req.body);
-    if (respond.error)
-        return res.status(400).json(respond);
+    const response = await userService.createUser(req.body);
+    if (response.errorCode !== 0)
+        return res.status(400).json(response);
 
-    return res.status(201).json(respond)
+    return res.status(201).json(response)
 });
 
+const getOneUser = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const response = await userService.handleGetOneUser(id);
+    if (response.errorCode !== 0)
+        return res.status(400).json(response);
+
+    return res.status(201).json(response)
+
+})
+
 export default {
-    register
+    register,
+    getOneUser
 }

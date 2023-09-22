@@ -1,9 +1,10 @@
 import db from '../models/index'
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const createUser = async (data) => {
-    const { email, password, phoneNumber, lastName, firstName } = data;
-    if (!email || !password || !phoneNumber || !lastName || !firstName)
+    const { email, password, phoneNumber } = data;
+    if (!email || !password || !phoneNumber)
         return { errorCode: 1, message: "email, password, phoneNumber,name are required!" };
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -12,8 +13,8 @@ const createUser = async (data) => {
         defaults: {
             email: email,
             password: hashPassword,
-            firstName: firstName,
-            lastName: lastName,
+            firstName: null,
+            lastName: null,
             phoneNumber: phoneNumber,
             coins: 0,
             amountSpent: 0,
@@ -27,7 +28,6 @@ const createUser = async (data) => {
 };
 
 const userLogin = async (email, password) => {
-
     if (!email || !password) {
         return {
             errorCode: 1,
@@ -40,17 +40,27 @@ const userLogin = async (email, password) => {
         //user exist
         const user = await db.User.findOne({
             where: { email: email },
-            raw: true
+            // raw: true
         });
         if (user) {
             // check password
             const checkPassword = await bcrypt.compare(password, user.password);
             if (checkPassword) {
-                delete user.password;
+                const accessToken = jwt.sign(
+                    {
+                        Info: {
+                            id: user.id,
+                        },
+                    },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: 60 }
+                );
+                // delete user.password;
                 return {
                     errorCode: 0,
                     errMessage: "ok",
-                    user: user
+                    token: accessToken,
+                    // user: user
                 };
             } else {
                 return {
@@ -60,7 +70,6 @@ const userLogin = async (email, password) => {
             }
 
         }
-
     }
     return {
         errorCode: 2,
@@ -80,8 +89,25 @@ const checkEmail = async (email) => {
 
 }
 
+const handleGetOneUser = async (userId) => {
+    const user = await db.User.findOne({ where: { id: userId } });
+    if (user === null) {
+        return {
+            errorCode: 1,
+            errMessage: "Not found user"
+        }
+    } else {
+        delete user.password;
+        return {
+            errorCode: 0,
+            errMessage: "ok",
+            user
+        }
+    }
+}
 
 export default {
     createUser,
-    userLogin
+    userLogin,
+    handleGetOneUser
 }
