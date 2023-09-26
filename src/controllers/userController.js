@@ -3,7 +3,8 @@ const asyncHandler = require("express-async-handler");
 
 
 const register = asyncHandler(async (req, res) => {
-    const response = await userService.createUser(req.body);
+    const { email, phoneNumber, password } = req.body
+    const response = await userService.createUser(email, phoneNumber, password);
     if (response.errorCode !== 0)
         return res.status(400).json(response);
 

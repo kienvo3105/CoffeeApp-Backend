@@ -2,10 +2,9 @@ import db from '../models/index'
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const createUser = async (data) => {
-    const { email, password, phoneNumber } = data;
+const createUser = async (email, phoneNumber, password) => {
     if (!email || !password || !phoneNumber)
-        return { errorCode: 1, message: "email, password, phoneNumber,name are required!" };
+        return { errorCode: 1, message: "email, password, phoneNumber are required!" };
 
     const hashPassword = await bcrypt.hash(password, 10);
     const [user, checkEmail] = await db.User.findOrCreate({
@@ -24,7 +23,7 @@ const createUser = async (data) => {
     if (!checkEmail)
         return { errorCode: 2, message: "email is existed" }
 
-    return `${email} register successfully`;
+    return { errorCode: 0, message: `${email} register successfully` }
 };
 
 const userLogin = async (email, password) => {
@@ -53,7 +52,7 @@ const userLogin = async (email, password) => {
                         },
                     },
                     process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: 60 }
+                    { expiresIn: 60 * 5 }
                 );
                 // delete user.password;
                 return {
