@@ -52,7 +52,7 @@ const userLogin = async (email, password) => {
                         },
                     },
                     process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: 60 * 5 }
+                    { expiresIn: 60000 * 5 }
                 );
                 // delete user.password;
                 return {

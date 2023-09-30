@@ -3,9 +3,6 @@ const asyncHandler = require("express-async-handler");
 
 
 const userLogin = asyncHandler(async (req, res) => {
-    // const respond = await userService.createUser(req.body);
-    // if (respond.error)
-    //     return res.status(400).json(respond);
 
     const { email, password } = req.body;
 
