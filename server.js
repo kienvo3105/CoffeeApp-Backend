@@ -3,6 +3,7 @@ import connectDB from './src/config/connectDB'
 import initRootRoute from './src/routes/root'
 import initAuthRoute from './src/routes/authRoutes';
 import initUserRoute from './src/routes/userRoutes';
+import initBranchRoute from './src/routes/branchRoutes';
 import cors from 'cors';
 import 'dotenv/config';
 
@@ -18,6 +19,7 @@ app.use(express.json());
 initRootRoute(app);
 initAuthRoute(app);
 initUserRoute(app);
+initBranchRoute(app);
 
 connectDB();
 
