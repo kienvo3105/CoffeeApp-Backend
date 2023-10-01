@@ -25,7 +25,7 @@ const managerLogin = asyncHandler(async (req, res) => {
 
 const adminLogin = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    const response = await adminService.adminLogin(email, password);
+    const response = await adminService.adminLogin(email, password, res);
 
     if (response.errorCode !== 0)
         return res.status(401).json(response);

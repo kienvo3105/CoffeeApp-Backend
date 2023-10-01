@@ -10,7 +10,7 @@ const initManagerRoute = (app) => {
         .post(managerController.createNewManager);
 
     router
-        .route("")
+        .route("/")
         .get(managerController.getAllManager);
 
     // router

@@ -3,11 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
-const adminLogin = async (email, password) => {
+const adminLogin = async (email, password, res) => {
     if (!email || !password) {
         return { errorCode: 1, errorMessage: "email, password are required!" };
     }
-    const foundAdmin = await db.User.findOne({ where: { email: email } });
+    const foundAdmin = await db.Admin.findOne({ where: { email: email } });
     if (foundAdmin === null)
         return {
             errorCode: 2,
