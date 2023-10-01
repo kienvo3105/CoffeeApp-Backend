@@ -5,12 +5,15 @@ import authController from "../controllers/authController";
 const router = Router();
 
 const initAuthRoute = (app) => {
-    // router.get("/", (req, res) => {
-    //     return res.status(200).json("auth ok");
-    // });
 
-    router.post("/register", userController.register)
-    router.post("/userLogin", authController.userLogin)
+    router.post("/", authController.adminLogin);
+    router.get("/refresh", authController.adminRefresh);
+
+
+    router.post("/logout", authController.logout);
+    router.post("/register", userController.register);
+    router.post("/userLogin", authController.userLogin);
+
     router.post("/managerLogin", authController.managerLogin);
 
     return app.use('/api/v1/auth', router);
