@@ -4,6 +4,8 @@ import initRootRoute from './src/routes/root'
 import initAuthRoute from './src/routes/authRoutes';
 import initUserRoute from './src/routes/userRoutes';
 import initBranchRoute from './src/routes/branchRoutes';
+import initAddressRoute from './src/routes/addressRoutes';
+import initManagerRoute from './src/routes/managerRoutes';
 import cors from 'cors';
 import 'dotenv/config';
 
@@ -20,6 +22,8 @@ initRootRoute(app);
 initAuthRoute(app);
 initUserRoute(app);
 initBranchRoute(app);
+initAddressRoute(app);
+initManagerRoute(app);
 
 connectDB();
 
@@ -28,7 +32,7 @@ connectDB();
 app.use((err, req, res, next) => {
     // Xử lý lỗi ở đây
     console.error(err);
-    res.status(500).json({ error: 'Something went wrong' });
+    res.status(500).json({ errorMessage: 'Something went wrong server' });
 });
 
 

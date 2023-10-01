@@ -5,17 +5,10 @@ import branchController from "../controllers/branchController";
 const router = Router();
 
 const initBranchRoute = (app) => {
-    // router.get("/", (req, res) => {
-    //     return res.status(200).json("auth ok");
-    // });
-
-    // router.post("/register", userController.register)
-    // router.post("/userLogin", authController.userLogin)
-
     router
         .route("/")
         .get(branchController.getAllBranch)
-        .post(verifyJWT, branchController.createNewBranch);
+        .post(branchController.createNewBranch);
 
     router
         .route("/:id")

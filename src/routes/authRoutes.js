@@ -11,7 +11,7 @@ const initAuthRoute = (app) => {
 
     router.post("/register", userController.register)
     router.post("/userLogin", authController.userLogin)
-
+    router.post("/managerLogin", authController.managerLogin);
 
     return app.use('/api/v1/auth', router);
 }

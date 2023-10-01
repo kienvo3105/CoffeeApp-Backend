@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-
+import branchService from "../services/branchService";
 
 const getAllBranch = asyncHandler(async (req, res) => {
 
@@ -8,9 +8,10 @@ const getAllBranch = asyncHandler(async (req, res) => {
 });
 
 const createNewBranch = asyncHandler(async (req, res) => {
+    // const response = req.body
+    const response = await branchService.createNewBranch(req.body);
 
-
-    return res.status(201).json({ message: "ok createNewBranch" })
+    return res.status(201).json(response)
 });
 
 const getOneBranch = asyncHandler(async (req, res) => {
