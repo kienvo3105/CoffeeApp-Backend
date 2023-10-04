@@ -1,3 +1,4 @@
+import { where } from 'sequelize';
 import db from '../models/index'
 import addressService from './addressService';
 
@@ -19,6 +20,25 @@ const createNewBranch = async (data) => {
 
 }
 
+const getAllBranch = async () => {
+    const data = await db.Branch.findAll({
+        include: [{
+            model: db.Address,
+        }, {
+            model: db.Manager,
+            attributes: { exclude: ['password'] },
+        }],
+        nest: true,
+        raw: true,
+        // attributes: { exclude: ['ManagerId'] },
+    });
+    return {
+        errorCode: 0, errorMessage: "ok",
+        data
+    }
+}
+
 export default {
-    createNewBranch
+    createNewBranch,
+    getAllBranch
 }

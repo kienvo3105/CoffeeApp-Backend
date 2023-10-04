@@ -6,12 +6,13 @@ const router = Router();
 
 const initManagerRoute = (app) => {
     router
-        .route("/register")
+        .route("/")
+        .get(managerController.getAllManager)
         .post(managerController.createNewManager);
 
-    router
-        .route("/")
-        .get(managerController.getAllManager);
+    // router
+    //     .route("/")
+
 
     // router
     //     .route("/:id")

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Manager.hasOne(models.Branch, { foreignKey: 'managerId' });
         }
     }
     Manager.init({
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         password: DataTypes.STRING,
         firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
-        phoneNumber: DataTypes.INTEGER,
+        phoneNumber: DataTypes.STRING,
     }, {
         sequelize,
         modelName: 'Manager',

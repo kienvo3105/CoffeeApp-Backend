@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Branch.belongsTo(models.Address, { foreignKey: 'addressId' });
+            Branch.belongsTo(models.Manager, { foreignKey: 'managerId' });
         }
     }
     Branch.init({
