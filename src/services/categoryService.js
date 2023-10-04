@@ -1,10 +1,9 @@
-import category from '../models/category';
 import db from '../models/index'
 
 const createNewCategory = async (data) => {
     const { image, name, sizeL, sizeM, sizeS } = data;
-    if (!image || !name)
-        return { errorCode: 1, messageError: "image and name are required!" };
+    if (!image || !name || !sizeL || !sizeM || !sizeS)
+        return { errorCode: 1, messageError: "image, name and price size are required!" };
 
     const category = await db.Category.create(data);
 
@@ -41,7 +40,7 @@ const getAllCategory = async () => {
 
     const result = filterAllCategory(allCategory)
 
-    return { errorCode: 0, messageError: "ok", data: result };
+    return { errorCode: 0, messageError: "ok", allCategory: result };
 }
 
 const filterAllCategory = (allCategory) => {
@@ -72,7 +71,39 @@ const filterAllCategory = (allCategory) => {
     return outputData
 }
 
+const getOneCategory = async (categoryId) => {
+    if (!categoryId)
+        return { errorCode: 1, messageError: "categoryId is required" };
+
+    const category = await db.Category.findAll({
+        where: { id: categoryId },
+        include: [{
+            model: db.Size,
+        },],
+        nest: true,
+        raw: true,
+    })
+
+    if (!category.length)
+        return { errorCode: 2, messageError: "categoryId not found" };
+    const result = filterCategory(category)
+
+    return { errorCode: 0, messageError: "ok", category: result };
+}
+
+const filterCategory = (category) => {
+    const sizeCategory = category.map((item) => { return { name: item.Sizes.name, additionalPrice: item.Sizes.CategorySize.additionalPrice } });
+    const createNewCategory = {
+        id: category[0].id,
+        name: category[0].name,
+        image: category[0].image,
+        size: sizeCategory
+    }
+    return createNewCategory
+}
+
 export default {
     createNewCategory,
-    getAllCategory
+    getAllCategory,
+    getOneCategory
 }

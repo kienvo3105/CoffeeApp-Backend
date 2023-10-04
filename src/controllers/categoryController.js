@@ -18,7 +18,21 @@ const getAllCategory = asyncHandler(async (req, res) => {
 
     return res.status(200).json(response);
 });
+
+
+const getOneCategory = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+
+    const response = await categoryService.getOneCategory(id);
+
+    if (response && response.errorCode !== 0)
+        return res.status(401).json(response);
+
+    return res.status(200).json(response);
+});
+
 export default {
     getAllCategory,
-    createNewCategory
+    createNewCategory,
+    getOneCategory
 }

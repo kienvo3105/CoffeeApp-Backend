@@ -20,7 +20,7 @@ const createNewBranch = async (data) => {
 }
 
 const getAllBranch = async () => {
-    const data = await db.Branch.findAll({
+    const allBranch = await db.Branch.findAll({
         include: [{
             model: db.Address,
         }, {
@@ -33,7 +33,7 @@ const getAllBranch = async () => {
     });
     return {
         errorCode: 0, errorMessage: "ok",
-        data
+        allBranch
     }
 }
 

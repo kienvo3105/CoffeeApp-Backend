@@ -9,11 +9,11 @@ const initCategoryRoute = (app) => {
         .get(categoryController.getAllCategory)
         .post(categoryController.createNewCategory);
 
-    // router
-    //     .route("/:id")
-    //     .get(AddressController.getOneAddress)
-    //     .patch(verifyJWT, AddressController.updateAddress)
-    //     .delete(verifyJWT, AddressController.deleteAddress);
+    router
+        .route("/:id")
+        .get(categoryController.getOneCategory)
+    // .patch(verifyJWT, AddressController.updateAddress)
+    // .delete(verifyJWT, AddressController.deleteAddress);
 
 
     return app.use('/api/v1/category', router);
