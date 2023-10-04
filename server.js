@@ -7,6 +7,10 @@ import initBranchRoute from './src/routes/branchRoutes';
 import initAddressRoute from './src/routes/addressRoutes';
 import initManagerRoute from './src/routes/managerRoutes';
 import initCategoryRoute from './src/routes/categoryRoutes';
+import initProductRoute from './src/routes/productRoutes';
+
+
+
 import cors from 'cors';
 import 'dotenv/config';
 
@@ -26,7 +30,7 @@ initBranchRoute(app);
 initAddressRoute(app);
 initManagerRoute(app);
 initCategoryRoute(app)
-
+initProductRoute(app);
 
 
 
