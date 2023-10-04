@@ -14,9 +14,27 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     OrderDetail.init({
-        orderId: DataTypes.STRING,
-        productId: DataTypes.STRING,
-        sizeId: DataTypes.STRING,
+        orderId: {
+            type: DataTypes.STRING,
+            references: {
+                model: 'Order',
+                key: 'id'
+            }
+        },
+        productId: {
+            type: DataTypes.STRING,
+            references: {
+                model: 'Product',
+                key: 'id'
+            }
+        },
+        sizeId: {
+            type: DataTypes.STRING,
+            references: {
+                model: 'Size',
+                key: 'id'
+            }
+        },
         quantity: DataTypes.INTEGER,
         price: DataTypes.DOUBLE,
         noted: DataTypes.STRING,

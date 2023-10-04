@@ -14,13 +14,25 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     CategorySize.init({
-        categoryId: DataTypes.STRING,
-        sizeId: DataTypes.STRING,
+        // categoryId: {
+        //     type: DataTypes.STRING,
+        //     references: {
+        //         model: 'Category', // 'Movies' would also work
+        //         key: 'id'
+        //     }
+        // },
+        // sizeId: {
+        //     type: DataTypes.STRING,
+        //     references: {
+        //         model: 'Size', // 'Movies' would also work
+        //         key: 'id'
+        //     }
+        // },
         additionalPrice: DataTypes.DOUBLE,
     }, {
         sequelize,
         modelName: 'CategorySize',
-        tableName: 'categorySize'
+        tableName: 'category_size'
     });
     return CategorySize;
 };

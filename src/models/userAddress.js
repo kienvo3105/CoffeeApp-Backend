@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   UserAddress.init({
-    userId: DataTypes.STRING,
-    addressId: DataTypes.STRING,
+    userId: {
+      type: DataTypes.STRING,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
+    },
+    addressId: {
+      type: DataTypes.STRING,
+      references: {
+        model: 'Address',
+        key: 'id'
+      }
+    },
   }, {
     sequelize,
     modelName: 'UserAddress',

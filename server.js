@@ -6,6 +6,7 @@ import initUserRoute from './src/routes/userRoutes';
 import initBranchRoute from './src/routes/branchRoutes';
 import initAddressRoute from './src/routes/addressRoutes';
 import initManagerRoute from './src/routes/managerRoutes';
+import initCategoryRoute from './src/routes/categoryRoutes';
 import cors from 'cors';
 import 'dotenv/config';
 
@@ -24,6 +25,10 @@ initUserRoute(app);
 initBranchRoute(app);
 initAddressRoute(app);
 initManagerRoute(app);
+initCategoryRoute(app)
+
+
+
 
 connectDB();
 
