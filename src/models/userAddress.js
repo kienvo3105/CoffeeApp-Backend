@@ -11,23 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // UserAddress.belongsToMany(models.Order,{through: 'order_useraddress',foreignKey:'id'});
+      UserAddress.hasMany(models.Order);
     }
   }
   UserAddress.init({
-    userId: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
-    },
-    addressId: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'Address',
-        key: 'id'
-      }
-    },
+    // userId: {
+    //   type: DataTypes.STRING,
+    //   references: {
+    //     model: 'User',
+    //     key: 'id'
+    //   }
+    // },
+    // addressId: {
+    //   type: DataTypes.STRING,
+    //   references: {
+    //     model: 'Address',
+    //     key: 'id'
+    //   }
+    // },
   }, {
     sequelize,
     modelName: 'UserAddress',

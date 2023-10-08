@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             Branch.belongsTo(models.Address, { foreignKey: 'addressId' });
             Branch.belongsTo(models.Manager, { foreignKey: 'managerId' });
+            Branch.hasMany(models.Order)
         }
     }
     Branch.init({

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             Size.belongsToMany(models.Category, { through: models.CategorySize })
+            Size.hasMany(models.OrderDetail)
         }
     }
     Size.init({
