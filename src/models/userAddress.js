@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     //     key: 'id'
     //   }
     // },
+    userName: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'UserAddress',

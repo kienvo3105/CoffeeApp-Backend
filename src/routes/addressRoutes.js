@@ -16,7 +16,6 @@ const initAddressRoute = (app) => {
         .patch(verifyJWT, AddressController.updateAddress)
         .delete(verifyJWT, AddressController.deleteAddress);
 
-
     return app.use('/api/v1/address', router);
 }
 

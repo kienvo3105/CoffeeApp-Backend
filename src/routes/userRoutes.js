@@ -1,7 +1,7 @@
 import { Router } from "express";
 import userController from "../controllers/userController";
 import verifyJWT from "../middleware/verifyJWT";
-
+import userAddressController from "../controllers/userAddressController";
 const router = Router();
 
 const initUserRoute = (app) => {
@@ -12,6 +12,12 @@ const initUserRoute = (app) => {
     router.get("/:id", verifyJWT, userController.getOneUser)
     // router.post("/userLogin", authController.userLogin)
 
+    router
+        .route("/:id/address")
+        .get()
+        .post(userAddressController.createNewUserAddress)
+        .patch()
+        .delete()
 
     return app.use('/api/v1/user', router);
 }

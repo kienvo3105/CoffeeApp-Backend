@@ -21,6 +21,8 @@ const getOneUser = asyncHandler(async (req, res) => {
 
 })
 
+
+
 export default {
     register,
     getOneUser
