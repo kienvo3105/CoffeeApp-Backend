@@ -9,9 +9,9 @@ const createNewCategory = async (data) => {
 
     await Promise.all([
         db.CategorySize.create({
-            SizeId: "s_L",
+            SizeId: "s_S",
             CategoryId: category.id,
-            additionalPrice: sizeL
+            additionalPrice: sizeS
         }),
         db.CategorySize.create({
             SizeId: "s_M",
@@ -19,10 +19,10 @@ const createNewCategory = async (data) => {
             additionalPrice: sizeM
         }),
         db.CategorySize.create({
-            SizeId: "s_S",
+            SizeId: "s_L",
             CategoryId: category.id,
-            additionalPrice: sizeS
-        })
+            additionalPrice: sizeL
+        }),
     ]);
 
 
@@ -33,7 +33,8 @@ const getAllCategory = async () => {
     const allCategory = await db.Category.findAll({
         include: [{
             model: db.Size,
-        },],
+        }],
+        order: [[db.Size, "name", "DESC"]],
         nest: true,
         raw: true,
     })

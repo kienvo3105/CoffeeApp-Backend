@@ -13,7 +13,7 @@ const createNewProduct = async (data) => {
 const getProductByCategory = async (categoryId) => {
     if (!categoryId)
         return { errorCode: 1, messageSuccess: 'categoryId is required!' };
-    const products = await db.Product.findAll({ where: { categoryId } });
+    const products = await db.Product.findAll({ where: { categoryId }, attributes: { exclude: ['CategoryId'] }, });
 
     return { errorCode: 0, messageSuccess: "ok", products }
 }
