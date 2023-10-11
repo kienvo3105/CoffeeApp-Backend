@@ -8,7 +8,7 @@ import initAddressRoute from './src/routes/addressRoutes';
 import initManagerRoute from './src/routes/managerRoutes';
 import initCategoryRoute from './src/routes/categoryRoutes';
 import initProductRoute from './src/routes/productRoutes';
-
+import initOrderRoute from './src/routes/orderRoutes';
 
 
 import cors from 'cors';
@@ -31,7 +31,7 @@ initAddressRoute(app);
 initManagerRoute(app);
 initCategoryRoute(app)
 initProductRoute(app);
-
+initOrderRoute(app);
 
 
 connectDB();

@@ -5,24 +5,24 @@ module.exports = {
         await queryInterface.createTable('order_detail', {
             orderId: {
                 type: Sequelize.STRING,
-                references: {
-                    model: 'Order',
-                    key: 'id',
-                },
+                // references: {
+                //     model: 'Order',
+                //     key: 'id',
+                // },
             },
             productId: {
                 type: Sequelize.STRING,
-                references: {
-                    model: 'Product',
-                    key: 'id',
-                },
+                // references: {
+                //     model: 'Product',
+                //     key: 'id',
+                // },
             },
             sizeId: {
                 type: Sequelize.STRING,
-                references: {
-                    model: 'Size',
-                    key: 'id',
-                },
+                // references: {
+                //     model: 'Size',
+                //     key: 'id',
+                // },
             },
             quantity: {
                 type: Sequelize.INTEGER

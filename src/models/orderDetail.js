@@ -19,13 +19,16 @@ module.exports = (sequelize, DataTypes) => {
     OrderDetail.init({
         orderId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             // references: {
-            //     model: 'Order',
-            //     key: 'id'
-            // }
+            //     model: 'Order', // Tên bảng Order
+            //     key: 'id', // Tên trường khóa chính trong bảng Order
+            // },
         },
+
         productId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             // references: {
             //     model: 'Product',
             //     key: 'id'
@@ -33,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         sizeId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             // references: {
             //     model: 'Size',
             //     key: 'id'
@@ -44,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'OrderDetail',
-        tableName: 'order_detail'
+        tableName: 'order_detail',
     });
     return OrderDetail;
 };
