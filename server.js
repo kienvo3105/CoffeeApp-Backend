@@ -40,7 +40,7 @@ connectDB();
 // Xử lý lỗi tự động khi có lỗi trong route handler
 app.use((err, req, res, next) => {
     // Xử lý lỗi ở đây
-    console.error(err);
+    console.error("Lỗi nè: ", err);
     res.status(500).json({ errorMessage: 'Something went wrong server' });
 });
 

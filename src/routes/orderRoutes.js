@@ -5,14 +5,19 @@ import orderController from "../controllers/orderController";
 const router = Router();
 
 const initOrderRoute = (app) => {
+
+    router
+        .route("/:id")
+        .get(orderController.getOrderDetailById)
+
     router
         .route("/user/:id")
-        .get()
+        .get(orderController.getOrderByUser)
         .post(orderController.createNewOrder)
 
     router
-        .route("/branch/:id")
-        .get()
+        .route("/branch/:branchId")
+        .get(orderController.getOrderByBranch)
         .patch()
 
 

@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     OrderStatus.init({
+        id: {
+            primaryKey: true,
+            type: DataTypes.STRING,
+
+        },
         name: DataTypes.STRING,
     }, {
         sequelize,
