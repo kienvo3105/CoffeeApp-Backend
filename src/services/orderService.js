@@ -78,19 +78,10 @@ const getOrderDetailById = async (orderId) => {
             },
             {
                 model: db.Size,
-                // attributes: {
-                //     exclude: ['id']
-                // },
             },
-            // {
-            //     model: db.Order,
-            //     attributes: {
-            //         exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId']
-            //     },
-            // },
         ],
         attributes: {
-            exclude: ['OrderId', 'ProductId', 'SizeId', 'sizeId']
+            exclude: ['OrderId', 'ProductId', 'SizeId', 'sizeId', 'orderId', 'productId']
         },
         nest: true,
         raw: true,
@@ -116,7 +107,7 @@ const getOrderByBranch = async (branchId) => {
                     model: db.Address
                 }],
                 attributes: {
-                    exclude: ["AddressId", 'UserId']
+                    exclude: ["password", 'coins', 'amountSpent', 'membershipClass']
                 }
             },
         ],
@@ -127,7 +118,19 @@ const getOrderByBranch = async (branchId) => {
         raw: true,
     });
 
-    return { errorCode: 0, messageError: "ok!", orders };
+    const orderPromises = orders.map(async (order) => {
+        const detail = await getOrderDetailById(order.id);
+        if (detail.errorCode === 0) {
+            order.orderDetails = detail.orderDetails;
+            return order;
+        } else {
+            return { errorCode: 1, messageError: "error get orderDetail" };
+        }
+    });
+
+    const processedOrders = await Promise.all(orderPromises);
+
+    return { errorCode: 0, messageError: "ok!", orders: processedOrders };
 }
 
 export default {
