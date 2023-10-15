@@ -1,4 +1,6 @@
 import db from "../models";
+const { Op } = require("sequelize");
+
 
 const createNewOrder = async (data, userId) => {
     const checkUser = await db.User.findByPk(userId);
@@ -44,17 +46,63 @@ const getOrderByUser = async (userId) => {
 
     const orders = await db.Order.findAll({
         where: {
-            userId: userId
+            userId: userId,
+            statusId: {
+                [Op.ne]: 't3'
+            }
         },
+        order: [['statusId', 'DESC'], ['orderDate', 'DESC']],
+        include: [
+            {
+                model: db.Branch,
+                attributes: {
+                    exclude: ['addressId', 'managerId']
+                }
+            },
+            { model: db.OrderStatus }
+        ],
         attributes: {
-            exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId']
+            exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId', 'branchId', 'statusId', 'userId', 'addressUserId']
         },
+        nest: true,
+        raw: true,
     })
 
     return { errorCode: 0, messageError: "ok!", orders };
 
 
 }
+
+const getOrderHistoryByUser = async (userId) => {
+    const checkUser = await db.User.findByPk(userId);
+    if (checkUser === null)
+        return { errorCode: 2, messageError: "user not found!" };
+
+    const orders = await db.Order.findAll({
+        where: {
+            userId: userId,
+            statusId: 't3'
+        },
+        order: [['orderDate', 'DESC']],
+        include: [
+            {
+                model: db.Branch,
+                attributes: {
+                    exclude: ['addressId', 'managerId']
+                }
+            },
+            { model: db.OrderStatus }
+        ],
+        attributes: {
+            exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId', 'branchId', 'statusId', 'userId', 'addressUserId']
+        },
+        nest: true,
+        raw: true,
+    })
+
+    return { errorCode: 0, messageError: "ok!", orders };
+}
+
 
 const getOrderDetailById = async (orderId) => {
     const checkOrder = await db.Order.findByPk(orderId, {
@@ -89,6 +137,9 @@ const getOrderDetailById = async (orderId) => {
 
     return { errorCode: 0, messageError: "ok!", orderDetails };
 }
+
+
+
 
 const getOrderByBranch = async (branchId) => {
     const checkBranch = await db.Branch.findByPk(branchId);
@@ -137,5 +188,6 @@ export default {
     createNewOrder,
     getOrderByUser,
     getOrderDetailById,
-    getOrderByBranch
+    getOrderByBranch,
+    getOrderHistoryByUser
 }

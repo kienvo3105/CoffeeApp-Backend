@@ -16,6 +16,13 @@ const getOrderByUser = asyncHandler(async (req, res) => {
     return res.status(200).json(response);
 })
 
+const getOrderHistoryByUser = asyncHandler(async (req, res) => {
+    const response = await orderService.getOrderHistoryByUser(req.params.id);
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(200).json(response);
+})
+
 const getOrderDetailById = asyncHandler(async (req, res) => {
     const response = await orderService.getOrderDetailById(req.params.id);
     if (response.errorCode !== 0)
@@ -34,5 +41,6 @@ export default {
     createNewOrder,
     getOrderByUser,
     getOrderDetailById,
-    getOrderByBranch
+    getOrderByBranch,
+    getOrderHistoryByUser
 }

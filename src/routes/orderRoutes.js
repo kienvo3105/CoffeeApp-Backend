@@ -16,6 +16,10 @@ const initOrderRoute = (app) => {
         .post(orderController.createNewOrder)
 
     router
+        .route("/history/user/:id")
+        .get(orderController.getOrderHistoryByUser)
+
+    router
         .route("/branch/:branchId")
         .get(orderController.getOrderByBranch)
         .patch()
