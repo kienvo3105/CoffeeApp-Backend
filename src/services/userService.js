@@ -105,8 +105,37 @@ const handleGetOneUser = async (userId) => {
     }
 }
 
+const updateUser = async (userId, data) => {
+    const user = await db.User.findOne({ where: { id: userId } });
+    if (user === null)
+        return {
+            errorCode: 1,
+            errMessage: "Not found user"
+        }
+
+    await db.User.update({ ...data }, { where: { id: userId } })
+    return {
+        errorCode: 0,
+        errMessage: "success update user with id: " + userId,
+    }
+}
+
+const removeUser = async (userId) => {
+    await db.User.destroy({
+        where: {
+            id: userId
+        },
+    });
+    return {
+        errorCode: 0,
+        errMessage: "success remove user with id: " + userId,
+    }
+}
+
 export default {
     createUser,
     userLogin,
-    handleGetOneUser
+    handleGetOneUser,
+    updateUser,
+    removeUser
 }

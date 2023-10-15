@@ -184,10 +184,17 @@ const getOrderByBranch = async (branchId) => {
     return { errorCode: 0, messageError: "ok!", orders: processedOrders };
 }
 
+const updateOrder = async (statusId, orderId) => {
+    await db.Order.update({ statusId }, { where: { id: orderId } });
+
+    return { errorCode: 0, messageError: "success update order with id:" + orderId };
+}
+
 export default {
     createNewOrder,
     getOrderByUser,
     getOrderDetailById,
     getOrderByBranch,
-    getOrderHistoryByUser
+    getOrderHistoryByUser,
+    updateOrder
 }

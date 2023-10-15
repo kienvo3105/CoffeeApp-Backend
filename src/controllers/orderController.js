@@ -37,10 +37,18 @@ const getOrderByBranch = asyncHandler(async (req, res) => {
     return res.status(200).json(response);
 })
 
+const updateOrder = asyncHandler(async (req, res) => {
+    const response = await orderService.updateOrder(req.body.statusId, req.params.id);
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(200).json(response);
+})
+
 export default {
     createNewOrder,
     getOrderByUser,
     getOrderDetailById,
     getOrderByBranch,
-    getOrderHistoryByUser
+    getOrderHistoryByUser,
+    updateOrder
 }

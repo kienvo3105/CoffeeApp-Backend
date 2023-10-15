@@ -9,6 +9,7 @@ const initOrderRoute = (app) => {
     router
         .route("/:id")
         .get(orderController.getOrderDetailById)
+        .patch(orderController.updateOrder)
 
     router
         .route("/user/:id")
