@@ -9,9 +9,7 @@ const initProductRoute = (app) => {
         .route("/category/:categoryId")
         .get(productController.getProductByCategory);
 
-    router
-        .route("/")
-        .post(productController.createNewProduct);
+    router.get("/best-seller", productController.getBestSellerProduct);
 
     router
         .route("/:id")
@@ -20,6 +18,9 @@ const initProductRoute = (app) => {
     //     .delete(verifyJWT, branchController.deleteBranch);
 
 
+    router
+        .route("/")
+        .post(productController.createNewProduct);
     return app.use('/api/v1/product', router);
 }
 

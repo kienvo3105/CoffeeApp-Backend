@@ -26,8 +26,17 @@ const getOneProduct = asyncHandler(async (req, res) => {
 
 })
 
+const getBestSellerProduct = asyncHandler(async (req, res) => {
+    const response = await productService.getBestSellerProduct();
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(200).json(response);
+
+})
+
 export default {
     createNewProduct,
     getProductByCategory,
-    getOneProduct
+    getOneProduct,
+    getBestSellerProduct
 }
