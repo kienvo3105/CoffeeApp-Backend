@@ -11,6 +11,8 @@ const initProductRoute = (app) => {
 
     router.get("/best-seller", productController.getBestSellerProduct);
 
+    router.get("/search", productController.searchProduct)
+
     router
         .route("/:id")
         .get(productController.getOneProduct)

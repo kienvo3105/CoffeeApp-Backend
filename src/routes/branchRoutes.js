@@ -10,6 +10,8 @@ const initBranchRoute = (app) => {
         .get(branchController.getAllBranch)
         .post(branchController.createNewBranch);
 
+    router.get("/search", branchController.searchBranch);
+
     router
         .route("/:id")
         .get(branchController.getOneBranch)

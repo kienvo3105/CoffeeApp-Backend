@@ -1,5 +1,5 @@
 import db from "../models";
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const { Sequelize, DataTypes, Op, where } = require('sequelize');
 
 const createNewProduct = async (data) => {
     const { categoryId, name, price, describe, image } = data;
@@ -97,9 +97,24 @@ const formatBestSellerProduct = (data) => {
     return newData;
 }
 
+const searchProduct = async (keyword) => {
+    const products = await db.Product.findAll({
+        where: {
+            name: Sequelize.where(
+                Sequelize.fn("lower", Sequelize.col("name")),
+                "like",
+                "%" + keyword + "%"
+            ),
+        }
+    });
+
+    return { errorCode: 0, messageSuccess: "OK", products }
+}
+
 export default {
     createNewProduct,
     getProductByCategory,
     getOneProduct,
-    getBestSellerProduct
+    getBestSellerProduct,
+    searchProduct
 }

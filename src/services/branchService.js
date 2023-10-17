@@ -1,5 +1,6 @@
 import db from '../models/index'
 import addressService from './addressService';
+const { Sequelize, DataTypes, Op, where } = require('sequelize');
 
 const createNewBranch = async (data) => {
     const { houseNumber, street, longitude, latitude, province, district, commune } = data.address;
@@ -37,7 +38,30 @@ const getAllBranch = async () => {
     }
 }
 
+const searchBranch = async (keyword) => {
+    const branches = await db.Branch.findAll({
+        where: {
+            name: Sequelize.where(
+                Sequelize.fn("lower", Sequelize.col("name")),
+                "like",
+                "%" + keyword + "%"
+            ),
+        },
+        include: [{
+            model: db.Address,
+        }, {
+            model: db.Manager,
+            attributes: { exclude: ['password'] },
+        }],
+        nest: true,
+        raw: true,
+    });
+
+    return { errorCode: 0, messageSuccess: "OK", branches }
+}
+
 export default {
     createNewBranch,
-    getAllBranch
+    getAllBranch,
+    searchBranch
 }

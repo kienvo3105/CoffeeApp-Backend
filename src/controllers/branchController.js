@@ -31,10 +31,18 @@ const deleteBranch = asyncHandler(async (req, res) => {
     return res.status(201).json({ message: "ok deleteBranch" })
 });
 
+const searchBranch = asyncHandler(async (req, res) => {
+    const response = await branchService.searchBranch(req.query.keyword);
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(201).json(response);
+})
+
 export default {
     getAllBranch,
     createNewBranch,
     getOneBranch,
     deleteBranch,
-    updateBranch
+    updateBranch,
+    searchBranch
 }
