@@ -100,15 +100,70 @@ const formatBestSellerProduct = (data) => {
 const searchProduct = async (keyword) => {
     const products = await db.Product.findAll({
         where: {
-            name: Sequelize.where(
-                Sequelize.fn("lower", Sequelize.col("name")),
+            // Use the table alias to specify the 'name' column in the 'Product' table
+            'Product.name': Sequelize.where(
+                Sequelize.fn("lower", Sequelize.col("Product.name")),
                 "like",
                 "%" + keyword + "%"
             ),
-        }
+        },
+        attributes: {
+            exclude: ['CategoryId']
+        },
+        include: [{
+            model: db.Category,
+            attributes: {
+                exclude: ['id', 'name', 'image']
+            },
+            include: [{
+                model: db.Size,
+            }]
+        }],
+        nest: true,
+        raw: true,
     });
 
-    return { errorCode: 0, messageSuccess: "OK", products }
+    const newProducts = formatSearchProduct(products);
+
+    return { errorCode: 0, messageSuccess: "OK", products: newProducts }
+}
+
+const formatSearchProduct = (data) => {
+    let newData = [];
+    data.forEach(item => {
+        const existingItem = newData.find(product => product.id === item.id)
+        if (existingItem) {
+            const { Sizes } = item.Category;
+            if (existingItem.sizeList[existingItem.sizeList.length - 1].name < Sizes.name)
+                existingItem.sizeList.unshift({
+                    id: Sizes.id,
+                    name: Sizes.name,
+                    additionalPrice: Sizes.CategorySize.additionalPrice
+                })
+            else
+                existingItem.sizeList.push({
+                    id: Sizes.id,
+                    name: Sizes.name,
+                    additionalPrice: Sizes.CategorySize.additionalPrice
+                })
+        }
+        else {
+            const { id, name, price, describe, image, Category } = item;
+            newData.push({
+                id,
+                name,
+                price,
+                describe,
+                image,
+                sizeList: [{
+                    id: Category.Sizes.id,
+                    name: Category.Sizes.name,
+                    additionalPrice: Category.Sizes.CategorySize.additionalPrice
+                }]
+            })
+        }
+    })
+    return newData;
 }
 
 export default {
