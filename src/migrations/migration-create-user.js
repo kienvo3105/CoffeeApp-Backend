@@ -35,8 +35,10 @@ module.exports = {
       },
       membershipClass: {
         type: Sequelize.STRING
+      },
+      dateOfBirth: {
+        type: Sequelize.DATE,
       }
-
     });
   },
   async down(queryInterface, Sequelize) {

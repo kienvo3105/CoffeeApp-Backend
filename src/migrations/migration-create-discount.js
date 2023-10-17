@@ -2,31 +2,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('manager', {
+        await queryInterface.createTable('discount', {
             id: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4
             },
-            email: {
+            code: {
                 type: Sequelize.STRING
             },
-            password: {
-                type: Sequelize.STRING
+            discount: {
+                type: Sequelize.DOUBLE
             },
-            firstName: {
-                type: Sequelize.STRING
+            expirationDate: {
+                type: Sequelize.DATE
             },
-            lastName: {
-                type: Sequelize.STRING
-            },
-            phoneNumber: {
+            image: {
                 type: Sequelize.STRING
             },
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('manager');
+        await queryInterface.dropTable('discount');
     }
 };
