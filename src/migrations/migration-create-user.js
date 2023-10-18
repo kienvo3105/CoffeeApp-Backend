@@ -38,6 +38,9 @@ module.exports = {
       },
       dateOfBirth: {
         type: Sequelize.DATE,
+      },
+      branchSelected: {
+        type: Sequelize.STRING
       }
     });
   },

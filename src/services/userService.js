@@ -171,7 +171,7 @@ const redeemDiscount = async (userId, discountId) => {
 }
 
 const getAllDiscountByUser = async (userId) => {
-    const user = await db.User.findAll({
+    const discounts = await db.User.findAll({
         where: { id: userId },
         include: [{
             model: db.Discount,
@@ -185,15 +185,23 @@ const getAllDiscountByUser = async (userId) => {
         raw: true,
         attributes: []
     });
-    if (user === null)
+    if (discounts === null)
         return {
             errorCode: 1,
             errMessage: "Not found user"
         }
+    const transformedDiscounts = discounts.map(discount => {
+        const { UserDiscount, ...data } = discount.Discounts;
+        return {
+            ...data,
+            userDiscountId: UserDiscount.id
+
+        };
+    });
     return {
         errorCode: 0,
         errMessage: "ok",
-        discount: user
+        discounts: transformedDiscounts
     }
 }
 

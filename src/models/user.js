@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     coins: DataTypes.INTEGER,
     amountSpent: DataTypes.DOUBLE,
     membershipClass: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE
+    dateOfBirth: DataTypes.DATE,
+    branchSelected: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
