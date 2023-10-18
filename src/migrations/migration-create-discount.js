@@ -18,9 +18,16 @@ module.exports = {
             expirationDate: {
                 type: Sequelize.DATE
             },
+            releaseDate: {
+                type: Sequelize.DATE
+            },
             image: {
                 type: Sequelize.STRING
             },
+            costChange: {
+                type: Sequelize.INTEGER
+            },
+
         });
     },
     async down(queryInterface, Sequelize) {

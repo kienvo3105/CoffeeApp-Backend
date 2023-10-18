@@ -9,7 +9,7 @@ import initManagerRoute from './src/routes/managerRoutes';
 import initCategoryRoute from './src/routes/categoryRoutes';
 import initProductRoute from './src/routes/productRoutes';
 import initOrderRoute from './src/routes/orderRoutes';
-
+import initDiscountRoute from './src/routes/discountRoutes';
 
 import cors from 'cors';
 import 'dotenv/config';
@@ -32,7 +32,7 @@ initManagerRoute(app);
 initCategoryRoute(app)
 initProductRoute(app);
 initOrderRoute(app);
-
+initDiscountRoute(app);
 
 connectDB();
 

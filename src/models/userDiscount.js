@@ -14,7 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     UserDiscount.init({
-        dateUsed: DataTypes.DATE
+        id: {
+            allowNull: false,
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
+        },
+        dateUsed: DataTypes.DATE,
     }, {
         sequelize,
         modelName: 'UserDiscount',

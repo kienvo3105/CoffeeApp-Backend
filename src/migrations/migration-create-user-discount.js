@@ -3,6 +3,12 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('user_discount', {
+            id: {
+                allowNull: false,
+                primaryKey: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4
+            },
             userId: {
                 type: Sequelize.STRING
             },
@@ -11,7 +17,7 @@ module.exports = {
             },
             dateUsed: {
                 type: Sequelize.DATE
-            }
+            },
         });
     },
     async down(queryInterface, Sequelize) {

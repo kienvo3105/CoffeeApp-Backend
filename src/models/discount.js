@@ -24,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         code: DataTypes.STRING,
         discount: DataTypes.DOUBLE,
         expirationDate: DataTypes.DATE,
-        image: DataTypes.STRING
+        releaseDate: DataTypes.DATE,
+        image: DataTypes.STRING,
+        costChange: DataTypes.INTEGER,
+
     }, {
         sequelize,
         modelName: 'Discount',
