@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 import userService from "../services/userService";
 
 const redeemDiscount = asyncHandler(async (req, res) => {
-    const response = await userService.redeemDiscount(req.params.id, req.body.discountId);
+    const response = await userService.redeemDiscount(req.params.id, req.body.couponId, req.body.numberCoupon);
     if (response.errorCode !== 0)
         return res.status(400).json(response);
 

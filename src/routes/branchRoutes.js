@@ -14,7 +14,7 @@ const initBranchRoute = (app) => {
 
     router
         .route("/:id")
-        .get(branchController.getOneBranch)
+        .get(branchController.getBranchById)
         .patch(verifyJWT, branchController.updateBranch)
         .delete(verifyJWT, branchController.deleteBranch);
 

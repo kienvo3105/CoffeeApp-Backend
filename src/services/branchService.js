@@ -60,8 +60,27 @@ const searchBranch = async (keyword) => {
     return { errorCode: 0, messageSuccess: "OK", branches }
 }
 
+const getBranchById = async (branchId) => {
+    const branch = await db.Branch.findByPk(branchId, {
+        include: [{
+            model: db.Address,
+        }, {
+            model: db.Manager,
+            attributes: { exclude: ['password'] },
+        }],
+        nest: true,
+        raw: true,
+    })
+
+    if (!branch)
+        return { errorCode: 1, messageSuccess: "branch not found" }
+
+    return { errorCode: 0, messageSuccess: "OK", branch }
+}
+
 export default {
     createNewBranch,
     getAllBranch,
-    searchBranch
+    searchBranch,
+    getBranchById
 }

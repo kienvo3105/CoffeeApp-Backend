@@ -133,7 +133,7 @@ const removeUser = async (userId) => {
     }
 }
 
-const redeemDiscount = async (userId, discountId) => {
+const redeemDiscount = async (userId, discountId, numberDiscount) => {
     const [user, discount] = await Promise.all([
         db.User.findOne({ where: { id: userId } }),
         db.Discount.findOne({ where: { id: discountId, expirationDate: { [Op.gte]: new Date() } } })
@@ -152,11 +152,11 @@ const redeemDiscount = async (userId, discountId) => {
             errMessage: "Not found discount or expire"
         };
     }
-    if (user.coins >= discount.costChange) {
-        await Promise.all([
-            db.User.update({ coins: user.coins - discount.costChange }, { where: { id: user.id } }),
-            db.UserDiscount.create({ UserId: userId, DiscountId: discountId })
-        ]);
+    const promise = [db.User.update({ coins: user.coins - discount.costChange * numberDiscount }, { where: { id: user.id } })]
+    for (let i = 0; i < numberDiscount; i++)
+        promise.push(db.UserDiscount.create({ UserId: userId, DiscountId: discountId }))
+    if (user.coins >= discount.costChange * numberDiscount) {
+        await Promise.all(promise);
     }
     else
         return {

@@ -13,12 +13,6 @@ const createNewBranch = asyncHandler(async (req, res) => {
     return res.status(201).json(response)
 });
 
-const getOneBranch = asyncHandler(async (req, res) => {
-
-
-    return res.status(201).json({ message: "ok getOneBranch" })
-});
-
 const updateBranch = asyncHandler(async (req, res) => {
 
 
@@ -38,11 +32,18 @@ const searchBranch = asyncHandler(async (req, res) => {
     return res.status(201).json(response);
 })
 
+const getBranchById = asyncHandler(async (req, res) => {
+    const response = await branchService.getBranchById(req.params.id);
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(201).json(response);
+})
+
 export default {
     getAllBranch,
     createNewBranch,
-    getOneBranch,
     deleteBranch,
     updateBranch,
-    searchBranch
+    searchBranch,
+    getBranchById
 }
