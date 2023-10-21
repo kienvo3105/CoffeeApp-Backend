@@ -10,9 +10,17 @@ import initCategoryRoute from './src/routes/categoryRoutes';
 import initProductRoute from './src/routes/productRoutes';
 import initOrderRoute from './src/routes/orderRoutes';
 import initDiscountRoute from './src/routes/discountRoutes';
+import initNotificationRoute from './src/routes/notificationRoutes';
 
 import cors from 'cors';
 import 'dotenv/config';
+
+//initialize firebase 
+var admin = require("firebase-admin");
+var serviceAccount = require("./coffeeapp-396609-firebase-adminsdk-kikcj-957b0a5ace.json");
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
 
 
 const app = express();
@@ -33,6 +41,9 @@ initCategoryRoute(app)
 initProductRoute(app);
 initOrderRoute(app);
 initDiscountRoute(app);
+
+//notification
+initNotificationRoute(app);
 
 connectDB();
 

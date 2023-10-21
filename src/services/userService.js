@@ -24,7 +24,7 @@ const createUser = async (email, phoneNumber, password) => {
     if (!checkEmail)
         return { errorCode: 2, message: "email is existed" }
 
-    return { errorCode: 0, message: `${email} register successfully` }
+    return { errorCode: 0, message: `${email} register successfully`, userId: user.id }
 };
 
 const userLogin = async (email, password) => {
@@ -55,12 +55,12 @@ const userLogin = async (email, password) => {
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: '1d' }
                 );
-                // delete user.password;
+                // delete user.password
                 return {
                     errorCode: 0,
                     errMessage: "ok",
                     token: accessToken,
-                    // user: user
+                    userId: user.id
                 };
             } else {
                 return {
