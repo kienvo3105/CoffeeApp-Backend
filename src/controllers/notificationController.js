@@ -54,23 +54,11 @@ const updateNotification = asyncHandler(async (req, res, next) => {
 
     // Thực hiện cập nhật thông báo dựa trên dữ liệu trong req.body
     try {
-        // const updatedNotification =
         await db.Notification.update(
-            { ...req.body }, // Dữ liệu cần cập nhật (ví dụ: { field1: value1, field2: value2 })
-            { where: { userId } } // Điều kiện tìm kiếm bản ghi cần cập nhật
+            { ...req.body },
+            { where: { userId } }
         );
-        // if (updatedNotification[0] === 1) {
-        //     // 1 bản ghi đã được cập nhật
-        //     return res.status(200).json({
-        //         status: 'success',
-        //         data: {
-        //             message: 'Notification updated successfully!',
-        //         },
-        //     });
-        // } else {
-        //     // Không có bản ghi nào được cập nhật
-        //     return next(new AppError('No document found with that ID', 404));
-        // }
+
         return res.status(200).json({
             status: 'success',
             data: {
@@ -98,27 +86,6 @@ const sendNotification = asyncHandler(async (req, res, next) => {
         const notificationData = {
             title: title || 'Results Are Ready!',
             body: body || 'Click here to view your results',
-            // data: {
-            //     navigate: navigate || 'Xray',
-            //     image: image || 'default',
-            //     data: data || null,
-            // },
-            // android: {
-            //     smallIcon: 'logo_circle',
-            //     channelId: 'default',
-            //     importance: 4,
-            //     pressAction: {
-            //         id: 'default',
-            //     },
-            // actions: [
-            //     {
-            //         title: 'Mark as Read',
-            //         pressAction: {
-            //             id: 'read',
-            //         },
-            //     },
-            // ],
-            // },
         };
 
         notification.notifications = JSON.parse(notification.notifications)
@@ -127,15 +94,12 @@ const sendNotification = asyncHandler(async (req, res, next) => {
         await db.Notification.update(
             {
                 data: notificationData,
-                // notifications: Sequelize.literal(`array_append("notifications", '${JSON.stringify(notificationData)}'::json)`)
                 notifications: notification.notifications
             },
             { where: { userId } }
         );
 
         // Gửi thông báo đến thiết bị với tokenID
-        // Thực hiện bằng cách gọi hàm gửi thông báo đến thiết bị tương ứng với Sequelize
-        // ...
         await admin.messaging().sendMulticast({
             tokens: [tokenId],
             data: {

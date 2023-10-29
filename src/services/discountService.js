@@ -15,7 +15,17 @@ const getAllDiscount = async () => {
     return { errorCode: 0, errorMessage: "ok", discounts }
 }
 
+const useDiscountById = async (discountId) => {
+    await db.UserDiscount.update({ dateUsed: new Date() }, {
+        where: {
+            id: discountId,
+        },
+    });
+    return { errorCode: 0, errorMessage: "ok" }
+}
+
 export default {
     createNewDiscount,
-    getAllDiscount
+    getAllDiscount,
+    useDiscountById
 }

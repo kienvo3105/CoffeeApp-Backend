@@ -26,6 +26,9 @@ const initUserRoute = (app) => {
         .post(userDiscountController.redeemDiscount)
         .get(userDiscountController.getAllDiscountByUser)
 
+
+
+
     return app.use('/api/v1/user', router);
 }
 

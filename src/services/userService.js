@@ -212,5 +212,6 @@ export default {
     updateUser,
     removeUser,
     redeemDiscount,
-    getAllDiscountByUser
+    getAllDiscountByUser,
+
 }

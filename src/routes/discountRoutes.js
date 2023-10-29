@@ -10,7 +10,9 @@ const initDiscountRoute = (app) => {
         .get(discountController.getAllDiscount)
         .post(discountController.createNewDiscount)
 
-
+    router
+        .route("/:id")
+        .patch(discountController.useDiscountById)
 
     return app.use('/api/v1/discount', router);
 }
