@@ -18,6 +18,7 @@ const initBranchRoute = (app) => {
         .patch(verifyJWT, branchController.updateBranch)
         .delete(verifyJWT, branchController.deleteBranch);
 
+    router.get("/:id/revenue-month", branchController.getRevenueMonthByBranch);
 
     return app.use('/api/v1/branch', router);
 }
