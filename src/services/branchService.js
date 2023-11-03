@@ -78,31 +78,9 @@ const getBranchById = async (branchId) => {
     return { errorCode: 0, messageSuccess: "OK", branch }
 }
 
-const getRevenueMonthByBranch = async (branchId) => {
-    const currentDate = new Date();
-    const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const revenue = await db.Order.findAll({
-        attributes: [
-            [Sequelize.fn('DATE', Sequelize.col('orderDate')), 'date'], // Lấy ngày từ orderDate
-            [Sequelize.fn('SUM', Sequelize.col('finalPrice')), 'revenue'] // Tổng doanh thu
-        ],
-        where: {
-            branchId: branchId,
-            orderDate: {
-                [Op.gte]: startDate, // Ngày bắt đầu
-                [Op.lte]: currentDate // Ngày kết thúc
-            }
-        },
-        group: [Sequelize.fn('DATE', Sequelize.col('orderDate'))],
-        order: [Sequelize.fn('DATE', Sequelize.col('orderDate'))]
-    });
-    return { errorCode: 0, messageSuccess: "OK", revenue }
-}
-
 export default {
     createNewBranch,
     getAllBranch,
     searchBranch,
     getBranchById,
-    getRevenueMonthByBranch
 }

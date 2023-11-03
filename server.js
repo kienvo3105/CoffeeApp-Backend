@@ -11,6 +11,8 @@ import initProductRoute from './src/routes/productRoutes';
 import initOrderRoute from './src/routes/orderRoutes';
 import initDiscountRoute from './src/routes/discountRoutes';
 import initNotificationRoute from './src/routes/notificationRoutes';
+import initRevenueRoute from './src/routes/revenueRoutes';
+
 
 import cors from 'cors';
 import 'dotenv/config';
@@ -41,6 +43,7 @@ initCategoryRoute(app)
 initProductRoute(app);
 initOrderRoute(app);
 initDiscountRoute(app);
+initRevenueRoute(app);
 
 //notification
 initNotificationRoute(app);
