@@ -32,6 +32,14 @@ const getBestSellerProduct = asyncHandler(async (req, res) => {
         return res.status(401).json(response);
     return res.status(200).json(response);
 
+});
+
+const getBestSellerProductByBranch = asyncHandler(async (req, res) => {
+    const response = await productService.getBestSellerProductByBranch(req.params.branchId);
+    if (response.errorCode !== 0)
+        return res.status(401).json(response);
+    return res.status(200).json(response);
+
 })
 
 const searchProduct = asyncHandler(async (req, res) => {
@@ -40,12 +48,13 @@ const searchProduct = asyncHandler(async (req, res) => {
         return res.status(401).json(response);
     return res.status(200).json(response);
 
-})
+});
 
 export default {
     createNewProduct,
     getProductByCategory,
     getOneProduct,
     getBestSellerProduct,
-    searchProduct
+    searchProduct,
+    getBestSellerProductByBranch
 }

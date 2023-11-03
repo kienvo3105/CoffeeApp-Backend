@@ -10,6 +10,8 @@ const initProductRoute = (app) => {
         .get(productController.getProductByCategory);
 
     router.get("/best-seller", productController.getBestSellerProduct);
+    router.get("/best-seller/branch/:branchId", productController.getBestSellerProductByBranch);
+
 
     router.get("/search", productController.searchProduct)
 

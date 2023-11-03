@@ -166,10 +166,42 @@ const formatSearchProduct = (data) => {
     return newData;
 }
 
+const getBestSellerProductByBranch = async (branchId) => {
+    const currentDate = new Date();
+    const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+    const product = await db.OrderDetail.findAll({
+        attributes: ['productId', [Sequelize.fn('SUM', Sequelize.col('OrderDetail.quantity')), 'totalSold']],
+        include: [{
+            model: db.Order,
+            where: {
+                branchId: branchId,
+                orderDate: {
+                    [Op.gte]: startDate,
+                    [Op.lte]: currentDate
+                }
+            },
+            attributes: []
+        },
+        {
+            model: db.Product,
+            attributes: ["name", "image"]
+        }],
+        group: ['productId'],
+        order: [[Sequelize.literal('totalSold'), 'DESC']],
+        limit: 5,
+        nest: true,
+        raw: true,
+    });
+
+    return { errorCode: 0, messageSuccess: "OK", products: product }
+}
+
 export default {
     createNewProduct,
     getProductByCategory,
     getOneProduct,
     getBestSellerProduct,
-    searchProduct
+    searchProduct,
+    getBestSellerProductByBranch
 }
