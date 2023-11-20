@@ -48,7 +48,7 @@ const getOrderByUser = async (userId) => {
         where: {
             userId: userId,
             statusId: {
-                [Op.ne]: 't3'
+                [Op.ne]: 't4'
             }
         },
         order: [['statusId', 'DESC'], ['orderDate', 'DESC']],
@@ -81,7 +81,7 @@ const getOrderHistoryByUser = async (userId) => {
     const orders = await db.Order.findAll({
         where: {
             userId: userId,
-            statusId: 't3'
+            statusId: 't4'
         },
         order: [['orderDate', 'DESC']],
         include: [
@@ -96,6 +96,7 @@ const getOrderHistoryByUser = async (userId) => {
         attributes: {
             exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId', 'branchId', 'statusId', 'userId', 'addressUserId']
         },
+        order: [["orderDate", "DESC"], ["finishDate", "DESC"]],
         nest: true,
         raw: true,
     })
@@ -170,6 +171,7 @@ const getOrderByBranch = async (branchId, statusId) => {
         attributes: {
             exclude: ['OrderStatusId', 'UserAddressAddressId', 'UserId', 'BranchId', 'addressUserId', 'branchId', 'userId', 'statusId']
         },
+        order: [["orderDate", "DESC"]],
         nest: true,
         raw: true,
     });
