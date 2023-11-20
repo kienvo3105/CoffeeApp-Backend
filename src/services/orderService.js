@@ -1,5 +1,5 @@
 import db from "../models";
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 
 const createNewOrder = async (data, userId) => {
@@ -193,8 +193,15 @@ const updateOrder = async (statusId, orderId) => {
     const updateData = { statusId };
     if (statusId === 't4') {
         updateData.finishDate = new Date();
+        const order = await db.Order.findOne({
+            where: { id: orderId },
+            attributes: ['userId', 'finalPrice'],
+        });
+        const coins = Math.floor(order.finalPrice / 10000);
+        await db.User.increment({ coins: coins }, { where: { id: order.userId } });
     }
     await db.Order.update(updateData, { where: { id: orderId } });
+
 
     return { errorCode: 0, messageError: "success update order with id:" + orderId };
 }
