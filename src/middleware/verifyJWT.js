@@ -15,7 +15,7 @@ function verifyJWT(req, res, next) {
         }
 
         // Nếu xác thực thành công, bạn có thể lưu thông tin người dùng trong req để sử dụng trong controller tiếp theo (nếu cần)
-        req.user = user;
+        req.user = user.Info.id;
 
         // Cho phép điều hướng tiếp theo
         next();

@@ -23,9 +23,6 @@ const initOrderRoute = (app) => {
     router
         .route("/branch/:branchId")
         .get(orderController.getOrderByBranch)
-        .patch()
-
-
 
 
     return app.use('/api/v1/order', router);

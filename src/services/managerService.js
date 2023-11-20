@@ -37,7 +37,12 @@ const managerLogin = async (email, password) => {
         //manager exist
         const manager = await db.Manager.findOne({
             where: { email: email },
-            // raw: true
+            include: [{
+                model: db.Branch,
+                attributes: ['id']
+            }],
+            nest: true,
+            raw: true,
         });
         if (manager) {
             // check password
@@ -52,12 +57,12 @@ const managerLogin = async (email, password) => {
                     process.env.ACCESS_TOKEN_SECRET,
                     { expiresIn: 60000 * 5 }
                 );
-                // delete manager.password;
+                delete manager.password;
                 return {
                     errorCode: 0,
                     errMessage: "ok",
                     token: accessToken,
-                    // manager: manager
+                    manager: manager
                 };
             } else {
                 return {
@@ -87,7 +92,15 @@ const checkEmail = async (email) => {
 }
 
 const handleGetOneManager = async (managerId) => {
-    const manager = await db.Manager.findOne({ where: { id: managerId } });
+    const manager = await db.Manager.findOne({
+        where: { id: managerId },
+        include: [{
+            model: db.Branch,
+            attributes: ['id']
+        }],
+        nest: true,
+        raw: true,
+    });
     if (manager === null) {
         return {
             errorCode: 1,

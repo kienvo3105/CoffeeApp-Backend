@@ -11,6 +11,18 @@ const createNewManager = asyncHandler(async (req, res) => {
     return res.status(201).json(response)
 });
 
+const getOneManager = asyncHandler(async (req, res) => {
+    let managerId = req.body.managerId;
+    if (!managerId) {
+        managerId = req.user;
+    }
+    const response = await managerService.handleGetOneManager(managerId);
+    if (response.errorCode !== 0)
+        return res.status(400).json(response);
+
+    return res.status(201).json(response)
+})
+
 const getAllManager = asyncHandler(async (req, res) => {
     // console.log('get all managers')
     const response = await managerService.handleGetAllManager();
@@ -22,6 +34,7 @@ const getAllManager = asyncHandler(async (req, res) => {
 
 export default {
     createNewManager,
-    getAllManager
+    getAllManager,
+    getOneManager
 
 }

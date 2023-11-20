@@ -194,7 +194,20 @@ const getBestSellerProductByBranch = async (branchId) => {
         raw: true,
     });
 
-    return { errorCode: 0, messageSuccess: "OK", products: product }
+    const totalQuantity = await db.Order.findOne({
+        attributes: [[Sequelize.fn('SUM', Sequelize.col('Order.quantity')), 'totalQuantity']],
+        where: {
+            branchId: branchId,
+            orderDate: {
+                [Op.gte]: startDate,
+                [Op.lte]: currentDate
+            }
+        },
+    })
+
+    const totalQuantityBestProduct = product.reduce((sum, currentValue) => sum + parseInt(currentValue.totalSold), 0);
+
+    return { errorCode: 0, messageSuccess: "OK", products: product, totalQuantity: parseInt(totalQuantity.totalQuantity), quantityOthers: parseInt(totalQuantity.totalQuantity) - totalQuantityBestProduct }
 }
 
 export default {

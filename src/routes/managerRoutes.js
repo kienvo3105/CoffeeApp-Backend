@@ -10,8 +10,9 @@ const initManagerRoute = (app) => {
         .get(managerController.getAllManager)
         .post(managerController.createNewManager);
 
-    // router
-    //     .route("/")
+    router
+        .route("/get-one-manager")
+        .get(verifyJWT, managerController.getOneManager);
 
 
     // router

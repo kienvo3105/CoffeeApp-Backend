@@ -11,10 +11,10 @@ const getRevenueMonthByBranch = async (branchId) => {
         ],
         where: {
             branchId: branchId,
-            // orderDate: {
-            //     [Op.gte]: startDate, // Ngày bắt đầu
-            //     [Op.lte]: currentDate // Ngày kết thúc
-            // }
+            orderDate: {
+                [Op.gte]: startDate, // Ngày bắt đầu
+                [Op.lte]: currentDate // Ngày kết thúc
+            }
         },
         group: [Sequelize.fn('DATE', Sequelize.col('orderDate'))],
         order: [Sequelize.fn('DATE', Sequelize.col('orderDate'))]

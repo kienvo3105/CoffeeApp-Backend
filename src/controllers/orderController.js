@@ -31,7 +31,7 @@ const getOrderDetailById = asyncHandler(async (req, res) => {
 })
 
 const getOrderByBranch = asyncHandler(async (req, res) => {
-    const response = await orderService.getOrderByBranch(req.params.branchId);
+    const response = await orderService.getOrderByBranch(req.params.branchId, req.query.status);
     if (response.errorCode !== 0)
         return res.status(401).json(response);
     return res.status(200).json(response);

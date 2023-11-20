@@ -141,13 +141,18 @@ const getOrderDetailById = async (orderId) => {
 
 
 
-const getOrderByBranch = async (branchId) => {
+const getOrderByBranch = async (branchId, statusId) => {
     const checkBranch = await db.Branch.findByPk(branchId);
     if (checkBranch === null)
         return { errorCode: 2, messageError: "branch not found!", branchId };
 
+    const whereCondition = { branchId };
+    if (statusId) {
+        whereCondition.statusId = statusId;
+    }
+
     const orders = await db.Order.findAll({
-        where: { branchId },
+        where: whereCondition,
         include: [
             {
                 model: db.OrderStatus,
@@ -185,7 +190,11 @@ const getOrderByBranch = async (branchId) => {
 }
 
 const updateOrder = async (statusId, orderId) => {
-    await db.Order.update({ statusId }, { where: { id: orderId } });
+    const updateData = { statusId };
+    if (statusId === 't4') {
+        updateData.finishDate = new Date();
+    }
+    await db.Order.update(updateData, { where: { id: orderId } });
 
     return { errorCode: 0, messageError: "success update order with id:" + orderId };
 }
